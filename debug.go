@@ -2,7 +2,7 @@ package debug
 
 import (
 	"fmt"
-	"github.com/funny/util/goid"
+	"github.com/funny/goid"
 	"os"
 )
 
