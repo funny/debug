@@ -35,8 +35,6 @@ func Test_Dump(t *testing.T) {
 	}
 	data.PointField = data
 
-	Dump(os.Stderr, DumpStyle{Pointer: true, Indent: "    "}, data)
-
-	println()
-	Dump(os.Stderr, DumpStyle{Format: true, Indent: "    "}, data)
+	t.Logf("%s", Dump(DumpStyle{Pointer: true, Indent: "    "}, data))
+	t.Logf("%s", Dump(DumpStyle{Format: true, Indent: "    "}, data))
 }

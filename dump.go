@@ -3,7 +3,6 @@ package debug
 import (
 	"bytes"
 	"fmt"
-	"io"
 	"reflect"
 )
 
@@ -25,12 +24,12 @@ type pointerInfo struct {
 }
 
 // Dump data.
-func Dump(writer io.Writer, style DumpStyle, data ...interface{}) {
+func Dump(style DumpStyle, data ...interface{}) []byte {
+	buff := new(bytes.Buffer)
 	for _, v := range data {
 		var (
 			pointers   *pointerInfo
 			interfaces = make([]reflect.Value, 0, 10)
-			buff       = new(bytes.Buffer)
 		)
 
 		printKeyValue(buff, reflect.ValueOf(v), &pointers, &interfaces, style, 1)
@@ -40,9 +39,8 @@ func Dump(writer io.Writer, style DumpStyle, data ...interface{}) {
 		if style.Pointer && pointers != nil {
 			printPointerInfo(buff, style.HeadLen, pointers)
 		}
-
-		writer.Write(buff.Bytes())
 	}
+	return buff.Bytes()
 }
 
 func isSimpleType(val reflect.Value, kind reflect.Kind, pointers **pointerInfo, interfaces *[]reflect.Value) bool {
