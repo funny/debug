@@ -30,6 +30,21 @@ func StackTrace(begin, end int) StackInfo {
 
 type StackInfo []uintptr
 
+type StackFrame struct {
+	Name string
+	File string
+	Line int
+}
+
+func (si StackInfo) Frames() []StackFrame {
+	frames := make([]StackFrame, len(si))
+	for i := 0; i < len(si); i++ {
+		name, file, line := function(si[i])
+		frames[i].Name, frames[i].File, frames[i].Line = string(name), string(file), line
+	}
+	return frames
+}
+
 func (si StackInfo) Bytes(indent string) []byte {
 	var buf = new(bytes.Buffer)
 	for i := 0; i < len(si); i++ {
