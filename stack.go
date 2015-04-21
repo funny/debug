@@ -17,7 +17,7 @@ var (
 func StackTrace(skip int) StackInfo {
 	si := StackInfo(make([]uintptr, 0, 5))
 	pc := make([]uintptr, 10)
-	skip += 1
+	skip += 2
 	for {
 		n := runtime.Callers(skip, pc)
 		if n == 0 {
