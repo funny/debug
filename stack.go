@@ -14,15 +14,15 @@ var (
 )
 
 // See runtime/debug.Stack()
-func StackTrace(begin, end int) StackInfo {
+func StackTrace(skip int) StackInfo {
 	si := StackInfo(make([]uintptr, 0, 5))
-	pc := make([]uintptr, 5)
-	for i := begin + 1; end == 0 || i < end; {
-		n := runtime.Callers(i, pc)
+	pc := make([]uintptr, 10)
+	for {
+		n := runtime.Callers(skip, pc)
 		if n == 0 {
 			break
 		}
-		i += n
+		skip += n
 		si = append(si, pc[0:n]...)
 	}
 	return si

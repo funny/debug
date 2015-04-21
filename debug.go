@@ -10,7 +10,7 @@ import (
 func Print(v ...interface{}) {
 	fmt.Fprintf(os.Stderr, "[DEBUG PRINT]\n%s", Dump(DumpStyle{Format: true, Indent: "  "}, v...))
 	fmt.Fprintln(os.Stderr, "by goroutine ", GoroutineID())
-	fmt.Fprint(os.Stderr, StackTrace(2, 0).String(""))
+	fmt.Fprint(os.Stderr, StackTrace(2).String(""))
 }
 
 func GoroutineID() string {
