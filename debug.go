@@ -13,7 +13,7 @@ func Print(v ...interface{}) {
 }
 
 func GoroutineID() string {
-	buf := make([]byte, 15)
+	buf := make([]byte, 20)
 	buf = buf[:runtime.Stack(buf, false)]
 	return string(bytes.Split(buf, []byte(" "))[1])
 }
